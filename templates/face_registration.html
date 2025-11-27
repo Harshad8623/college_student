@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4><i class="fas fa-camera"></i> Face Registration</h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i> 
+                    Please capture 20 clear images of your face from different angles for better recognition.
+                </div>
+                
+<div class="camera-container text-center">
+    <video id="video" width="640" height="480" autoplay></video>
+</div>
+
+<!-- REQUIRED: Status text (your JS depends on this) -->
+<p id="status-text" class="text-center mt-3 text-primary fw-bold">
+    📌 Ready — Capture your first image
+</p>
+
+<div class="progress mt-3">
+    <div id="progress" class="progress-bar" role="progressbar" style="width: 0%"
+         aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+
+                
+                <div class="text-center mt-3">
+                    <p>Captured: <span id="capture-count">0/20</span> images</p>
+                    
+                    <button id="capture-btn" class="btn btn-primary btn-lg">
+                        <i class="fas fa-camera"></i> Capture Image
+                    </button>
+                    
+                    <button id="train-btn" class="btn btn-secondary btn-lg" disabled>
+                        <i class="fas fa-brain"></i> Train Model
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Instructions</h5>
+            </div>
+            <div class="card-body">
+                <ol>
+                    <li>Ensure good lighting</li>
+                    <li>Face the camera directly</li>
+                    <li>Remove glasses if possible</li>
+                    <li>Keep a neutral expression</li>
+                    <li>Capture from different angles</li>
+                    <li>Click "Capture Image" 20 times</li>
+                    <li>Click "Train Model" when done</li>
+                </ol>
+                
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <strong>Important:</strong> You must complete all 20 captures for the system to work properly.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,149 @@
+/* ==================================
+        MINIMAL FUTURISTIC UI
+================================== */
+
+/* GLOBAL */
+body {
+    background: #eef1f5;
+    font-family: "Inter", "Poppins", sans-serif;
+    color: #2d3436;
+}
+
+/* HERO SECTION */
+.hero-section {
+    background: linear-gradient(120deg, #ffffff 0%, #e8f0ff 100%);
+    border: 1px solid rgba(255,255,255,0.7);
+    color: #2d3436;
+    border-radius: 20px;
+    padding: 45px;
+    margin: 30px 0;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+/* CARD BASE DESIGN */
+.card {
+    background: rgba(255,255,255,0.85);
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 18px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 0;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    transition: 0.25s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 35px rgba(0,0,0,0.18);
+}
+
+/* CARD HEADER (Futuristic Line Accent) */
+.card-header {
+    padding: 16px 22px;
+    font-weight: 700;
+    font-size: 1.15rem;
+    background: #fafbff;
+    border-bottom: 1px solid #e4e7ee;
+    position: relative;
+}
+
+.card-header::after {
+    content: "";
+    position: absolute;
+    left: 20px;
+    bottom: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #5a8dee, #9c6bff);
+    border-radius: 2px;
+}
+
+/* CAMERA BOX */
+.camera-container {
+    padding: 30px;
+    border-radius: 18px;
+    background: #ffffffb7;
+    border: 1px dashed #ccd6e0;
+    backdrop-filter: blur(14px);
+}
+
+/* NAVBAR BRAND – MODERN SOLID LOOK */
+.navbar-brand {
+    font-weight: 800;
+    font-size: 1.6rem;
+    letter-spacing: -0.5px;
+    color: #ffffff !important;
+}
+
+/* DASHBOARD HEADER */
+.dashboard-header {
+    border-bottom: 1px solid #dfe4ea;
+    padding-bottom: 16px;
+    margin-bottom: 25px;
+}
+
+/* FEATURES SECTION */
+.features-section {
+    border-radius: 18px;
+    background: rgba(255,255,255,0.8);
+    backdrop-filter: blur(12px);
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* ALERTS – Clean, Card-like */
+.alert {
+    border-radius: 14px;
+    border: 1px solid #dbe0ea;
+    background: #ffffff;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+}
+
+/* BUTTONS — Soft Rounded + Glow */
+.btn {
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-weight: 600;
+    border: none;
+    background: linear-gradient(135deg, #5a8dee, #8e5cff);
+    color: white;
+    transition: 0.25s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(90, 141, 238, 0.35);
+}
+
+/* TABLE */
+.table th {
+    background: #f3f6fb;
+    border-top: none;
+    font-weight: 700;
+}
+
+/* LOADING SPINNER */
+.loading {
+    width: 22px;
+    height: 22px;
+    border: 3px solid #dcdcdc;
+    border-top: 3px solid #5a8dee;
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 25px;
+    }
+    .card {
+        margin-bottom: 20px;
+    }
+}

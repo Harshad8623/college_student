@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard-header mb-4">
+    <h2><i class="fas fa-tachometer-alt"></i> Student Dashboard</h2>
+    <p class="text-muted">Welcome, {{ session.student_name }}!</p>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Attendance Summary</h5>
+            </div>
+            <div class="card-body">
+                {% if attendance_data %}
+                    <div class="row text-center">
+                        <div class="col-6">
+                            <div class="border-end">
+                                <h3 class="text-success">{{ attendance_data.get('Present', 0) }}</h3>
+                                <p class="text-muted">Present</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div>
+                                <h3 class="text-danger">{{ attendance_data.get('Absent', 0) }}</h3>
+                                <p class="text-muted">Absent</p>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <p class="text-muted">No attendance records found.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Recent Marks</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_marks %}
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>Marks</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for mark in recent_marks %}
+                                <tr>
+                                    <td>{{ mark[0] }}</td>
+                                    <td>{{ mark[1] }}/{{ mark[2] }}</td>
+                                    <td>{{ mark[3] }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="text-muted">No marks records found.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Your Information</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Status:</strong> <span class="badge bg-success">Approved</span></p>
+                <p>You can view your attendance and marks here. Contact your teacher if you find any discrepancies.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

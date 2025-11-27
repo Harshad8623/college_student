@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4><i class="fas fa-user-check"></i> Student Approval Queue</h4>
+            </div>
+            <div class="card-body">
+                {% if pending_students %}
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Class</th>
+                                    <th>Roll Number</th>
+                                    <th>Registration Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in pending_students %}
+                                <tr>
+                                    <td>{{ student[0] }}</td>
+                                    <td>{{ student[1] }}</td>
+                                    <td>{{ student[2] }}</td>
+                                    <td>{{ student[3] }}</td>
+                                    <td>{{ student[4] }}</td>
+                                    <td>{{ student[5] }}</td>
+                                    <td>
+                                        <a href="{{ url_for('approve_student', student_id=student[0]) }}" 
+                                           class="btn btn-success btn-sm">
+                                            <i class="fas fa-check"></i> Approve
+                                        </a>
+                                        <a href="{{ url_for('reject_student', student_id=student[0]) }}" 
+                                           class="btn btn-danger btn-sm"
+                                           onclick="return confirm('Are you sure you want to reject this student?')">
+                                            <i class="fas fa-times"></i> Reject
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+                        <p class="text-muted">No pending approvals. All students are approved!</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

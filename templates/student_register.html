@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="text-center"><i class="fas fa-user-plus"></i> Student Registration</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Full Name</label>
+                            {{ form.name(class="form-control") }}
+                            {% for error in form.name.errors %}
+                                <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Email</label>
+                            {{ form.email(class="form-control") }}
+                            {% for error in form.email.errors %}
+                                <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Class</label>
+                            {{ form.class_name(class="form-control") }}
+                            {% for error in form.class_name.errors %}
+                                <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Roll Number</label>
+                            {{ form.roll_number(class="form-control") }}
+                            {% for error in form.roll_number.errors %}
+                                <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        {{ form.password(class="form-control") }}
+                        {% for error in form.password.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="d-grid">
+                        {{ form.submit(class="btn btn-info") }}
+                    </div>
+                </form>
+                
+                <div class="text-center mt-3">
+                    <p>Already registered? <a href="{{ url_for('student_login') }}">Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

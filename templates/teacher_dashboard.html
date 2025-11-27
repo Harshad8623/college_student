@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard-header mb-4">
+    <h2><i class="fas fa-tachometer-alt"></i> Teacher Dashboard</h2>
+    <p class="text-muted">Welcome, {{ session.teacher_name }}!</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>{{ total_students }}</h4>
+                        <p>Total Students</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-users fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>{{ pending_approvals }}</h4>
+                        <p>Pending Approvals</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-user-clock fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>{{ today_attendance }}</h4>
+                        <p>Today's Attendance</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-calendar-check fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('take_attendance') }}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-camera"></i> Take Attendance
+                    </a>
+                    <a href="{{ url_for('upload_marks') }}" class="btn btn-success btn-lg">
+                        <i class="fas fa-upload"></i> Upload Marks
+                    </a>
+                    <a href="{{ url_for('approval_queue') }}" class="btn btn-warning btn-lg">
+                        <i class="fas fa-user-check"></i> Student Approvals
+                    </a>
+                    <a href="{{ url_for('analytics') }}" class="btn btn-info btn-lg">
+                        <i class="fas fa-chart-bar"></i> View Analytics
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Export Data</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('export_attendance') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-file-excel"></i> Export Attendance
+                    </a>
+                    <a href="{{ url_for('export_marks') }}" class="btn btn-outline-success">
+                        <i class="fas fa-file-excel"></i> Export Marks
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

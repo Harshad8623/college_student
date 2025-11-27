@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4><i class="fas fa-upload"></i> Upload Marks</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Student ID</label>
+                            {{ form.student_id(class="form-control", placeholder="Enter student ID") }}
+                            {% for error in form.student_id.errors %}
+                                <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Subject</label>
+                            {{ form.subject(class="form-control", placeholder="Enter subject name") }}
+                            {% for error in form.subject.errors %}
+                                <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Marks Obtained</label>
+                            {{ form.marks(class="form-control", placeholder="Marks obtained") }}
+                            {% for error in form.marks.errors %}
+                                <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Maximum Marks</label>
+                            {{ form.max_marks(class="form-control", placeholder="Maximum marks") }}
+                            {% for error in form.max_marks.errors %}
+                                <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Exam Date</label>
+                            {{ form.exam_date(class="form-control", placeholder="YYYY-MM-DD") }}
+                            {% for error in form.exam_date.errors %}
+                                <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid">
+                        {{ form.submit(class="btn btn-success btn-lg") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5>Recent Marks Uploaded</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Subject</th>
+                                <th>Marks</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Recent marks will be displayed here -->
+                            <tr>
+                                <td colspan="4" class="text-center text-muted">
+                                    No recent marks found
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

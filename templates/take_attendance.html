@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4><i class="fas fa-camera"></i> Live Attendance Scanner</h4>
+            </div>
+            <div class="card-body text-center">
+                <video id="video" width="640" height="480" autoplay></video>
+                <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+
+                <div class="mt-3">
+                    <button id="stop-btn" class="btn btn-danger btn-lg">
+                        <i class="fas fa-stop"></i> Stop Scanning
+                    </button>
+                </div>
+
+                <p class="mt-2 text-success" id="status-text">🔍 Scanning for faces...</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Recognized Students</h5>
+            </div>
+            <div class="card-body" style="max-height: 420px; overflow-y: auto;">
+                <table class="table table-sm table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Name</th>
+                            <th>Time</th>
+                            <th>Confidence</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results-table">
+                        <tr>
+                            <td colspan="3" class="text-muted text-center">Waiting for recognition...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header"><h5>Instructions</h5></div>
+            <div class="card-body">
+                <ul>
+                    <li>Only one student should stand in front at a time</li>
+                    <li>Maintain good lighting</li>
+                    <li>Face should be clearly visible to camera</li>
+                    <li>Attendance marks automatically — no button needed</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sound when recognized -->
+<audio id="beep-sound">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-positive-notification-951.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+let videoStream = null;
+let scanInterval = null;
+let recognizedIds = new Set(); // avoid duplicate alerts
+
+async function startCamera() {
+    try {
+        videoStream = await navigator.mediaDevices.getUserMedia({ video: true });
+        document.getElementById('video').srcObject = videoStream;
+
+        // start scanning every 1 sec
+        scanInterval = setInterval(scanFrame, 1000);
+    } catch (err) {
+        alert("⚠ Unable to access camera. Check permissions.");
+        console.error(err);
+    }
+}
+
+async function scanFrame() {
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const context = canvas.getContext('2d');
+
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const imageData = canvas.toDataURL('image/jpeg');
+
+    try {
+        const response = await fetch("/process_attendance", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ image: imageData })
+        });
+
+        const result = await response.json();
+        if (result.success && result.recognized_students.length > 0) {
+            updateTable(result.recognized_students);
+        }
+
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+function updateTable(students) {
+    const table = document.getElementById("results-table");
+    const beep = document.getElementById("beep-sound");
+    const now = new Date().toLocaleTimeString();
+
+    students.forEach(s => {
+        if (!recognizedIds.has(s.id)) {
+            recognizedIds.add(s.id);
+
+            beep.play();
+
+            const row = `
+                <tr class="table-success">
+                    <td>${s.name}</td>
+                    <td>${now}</td>
+                    <td>${s.confidence}%</td>
+                </tr>`;
+            table.innerHTML = row + table.innerHTML;
+        }
+    });
+}
+
+document.getElementById('stop-btn').addEventListener('click', stopScanning);
+
+function stopScanning() {
+    clearInterval(scanInterval);
+    if (videoStream) videoStream.getTracks().forEach(t => t.stop());
+    window.location.href = "{{ url_for('teacher_dashboard') }}";
+}
+
+window.onload = startCamera;
+</script>
+{% endblock %}
